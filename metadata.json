@@ -1,0 +1,6 @@
+{
+  "name": "KerfBend - Living Hinge Laser Cut Designer",
+  "description": "Parametric living hinge generator and CAD tool for laser cutting. Customize cut length, bridge gap, and line spacing across multiple cut patterns with real-time 2D/3D bend simulation, SVG, and DXF export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
