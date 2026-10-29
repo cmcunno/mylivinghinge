@@ -147,6 +147,7 @@ export default function App() {
           <div className="w-80 md:w-96 h-full">
             <ControlsPanel
               params={params}
+              data={hingeData}
               onChange={setParams}
               onOpenGuide={() => setIsGuideModalOpen(true)}
               onOpenBendCalc={() => setIsBendCalcModalOpen(true)}
@@ -206,6 +207,20 @@ export default function App() {
           {/* Bottom Precision Engineering Status Bar */}
           <footer className="mt-2 px-3 py-2 bg-slate-900/90 backdrop-blur rounded-lg border border-slate-800 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-3">
             <div className="flex flex-wrap items-center gap-4">
+              {/* Cut-to-Bridge Ratio Readout */}
+              <div className="flex items-center space-x-1.5 font-mono text-[11px]">
+                <span className="text-slate-500">Cut:Bridge:</span>
+                <span className={`font-bold ${hingeData.stats.cutToBridgeRatio.isIdeal ? 'text-emerald-400' : 'text-slate-200'}`}>
+                  {hingeData.stats.cutToBridgeRatio.ratioFormatted}
+                </span>
+                <span className="text-[10px] text-slate-400">({hingeData.stats.cutToBridgeRatio.cutPercent}% cut)</span>
+                {hingeData.stats.cutToBridgeRatio.isIdeal && (
+                  <span className="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-1 py-0.2 rounded font-sans">
+                    ⭐ Sweet Spot
+                  </span>
+                )}
+              </div>
+
               {/* Flexibility Rating */}
               <div className="flex items-center space-x-1.5">
                 <span className="text-slate-500 text-[11px]">Flex Rating:</span>

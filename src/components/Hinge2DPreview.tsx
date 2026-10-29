@@ -668,6 +668,10 @@ export const Hinge2DPreview: React.FC<Hinge2DPreviewProps> = ({
           <span className="text-emerald-400 font-medium">
             {isHorizontal ? 'Horizontal Cuts ↔' : 'Vertical Cuts ↕'}
           </span>
+          <span className="text-slate-600">|</span>
+          <span className={`font-mono ${data.stats.cutToBridgeRatio.isIdeal ? 'text-emerald-300 font-semibold' : 'text-slate-300'}`}>
+            Ratio: {data.stats.cutToBridgeRatio.ratioFormatted} ({data.stats.cutToBridgeRatio.cutPercent}% Cut)
+          </span>
           {viewRotation !== 0 && (
             <>
               <span className="text-slate-600">|</span>
@@ -686,6 +690,12 @@ export const Hinge2DPreview: React.FC<Hinge2DPreviewProps> = ({
 
         {/* Laser Quick Stats Badge on Top Right */}
         <div className="absolute top-2 right-2 bg-slate-900/80 backdrop-blur px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] font-mono text-slate-300 flex items-center space-x-3 pointer-events-none">
+          <div>
+            <span className="text-slate-500">Ratio: </span>
+            <span className={`font-bold ${data.stats.cutToBridgeRatio.isIdeal ? 'text-emerald-400' : 'text-slate-200'}`}>
+              {data.stats.cutToBridgeRatio.ratioFormatted}
+            </span>
+          </div>
           <div>
             <span className="text-slate-500">Cuts: </span>
             <span className="text-emerald-400 font-bold">{data.stats.cutLineCount}</span>

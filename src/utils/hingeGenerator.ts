@@ -128,6 +128,35 @@ export function generateHinge(params: HingeParams): GeneratedHingeData {
     ) / 10
   );
 
+  // Cut to Bridge Ratio Calculation (Industry ideal: 90:10 to 95:5)
+  const totalPeriod = Math.max(0.01, cutLength + bridgeSize);
+  const cutPercent = Math.round((cutLength / totalPeriod) * 1000) / 10;
+  const bridgePercent = Math.round((bridgeSize / totalPeriod) * 1000) / 10;
+  const ratioString = `${cutPercent.toFixed(1)} : ${bridgePercent.toFixed(1)}`;
+  const ratioFormatted = `${Math.round(cutPercent)} : ${Math.round(bridgePercent)}`;
+
+  const isIdeal = cutPercent >= 88.5 && cutPercent <= 95.5;
+
+  let ratioStatus: 'stiff' | 'moderate' | 'optimal' | 'ultra-flex' | 'fragile';
+  let ratioStatusLabel: string;
+
+  if (bridgeSize < 0.8 || cutPercent > 96.0) {
+    ratioStatus = 'fragile';
+    ratioStatusLabel = 'Fragile (>96% Cut, Kerf Snap Risk)';
+  } else if (cutPercent >= 93.0 && cutPercent <= 96.0) {
+    ratioStatus = 'ultra-flex';
+    ratioStatusLabel = 'Ultra-Flex Zone (~95:5 Ideal)';
+  } else if (cutPercent >= 88.0 && cutPercent < 93.0) {
+    ratioStatus = 'optimal';
+    ratioStatusLabel = 'Optimal Sweet Spot (~90:10 Ideal)';
+  } else if (cutPercent >= 80.0 && cutPercent < 88.0) {
+    ratioStatus = 'moderate';
+    ratioStatusLabel = 'Moderate Flex (80-87% Cut)';
+  } else {
+    ratioStatus = 'stiff';
+    ratioStatusLabel = 'Stiff / Low Flex (<80% Cut)';
+  }
+
   let flexibilityRating: GeneratedHingeData['stats']['flexibilityRating'] = 'Flexible';
   if (bridgeSize < 0.8 && slitRatio > 15) {
     flexibilityRating = 'Fragile (High Break Risk)';
@@ -155,6 +184,15 @@ export function generateHinge(params: HingeParams): GeneratedHingeData {
       minBendRadiusMm,
       estimatedCutTimeSec,
       flexibilityRating,
+      cutToBridgeRatio: {
+        cutPercent,
+        bridgePercent,
+        ratioString,
+        ratioFormatted,
+        isIdeal,
+        status: ratioStatus,
+        statusLabel: ratioStatusLabel,
+      },
     },
   };
 }

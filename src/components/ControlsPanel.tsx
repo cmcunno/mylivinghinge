@@ -1,7 +1,8 @@
 import React from 'react';
-import { HingeParams, MaterialPresetId, UnitType } from '../types/hinge';
+import { GeneratedHingeData, HingeParams, MaterialPresetId, UnitType } from '../types/hinge';
 import { MATERIAL_PRESETS, mmToUnit, unitToMm } from '../utils/materials';
 import { PatternSelector } from './PatternSelector';
+import { CutBridgeRatioMeter } from './CutBridgeRatioMeter';
 import {
   Sliders,
   Ruler,
@@ -16,6 +17,7 @@ import {
 
 interface ControlsPanelProps {
   params: HingeParams;
+  data: GeneratedHingeData;
   onChange: (newParams: HingeParams) => void;
   onOpenGuide: () => void;
   onOpenBendCalc: () => void;
@@ -23,6 +25,7 @@ interface ControlsPanelProps {
 
 export const ControlsPanel: React.FC<ControlsPanelProps> = ({
   params,
+  data,
   onChange,
   onOpenGuide,
   onOpenBendCalc,
@@ -234,6 +237,13 @@ export const ControlsPanel: React.FC<ControlsPanelProps> = ({
             <span>Stiff (8mm)</span>
           </div>
         </div>
+
+        {/* Visual Cut-to-Bridge Ratio Gauge & Sweet Spot Visualizer */}
+        <CutBridgeRatioMeter
+          data={data}
+          params={params}
+          onChangeParams={onChange}
+        />
 
         {/* 3. Line Spacing (Pitch between adjacent cut lines) */}
         <div className="space-y-1.5 bg-slate-950/60 p-3 rounded-lg border border-slate-800">

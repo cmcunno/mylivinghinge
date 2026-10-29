@@ -100,6 +100,15 @@ export interface GeneratedHingeData {
     minBendRadiusMm: number;
     estimatedCutTimeSec: number; // at approx 25mm/s laser feed
     flexibilityRating: 'Very Flexible' | 'Flexible' | 'Moderate' | 'Stiff' | 'Fragile (High Break Risk)';
+    cutToBridgeRatio: {
+      cutPercent: number;
+      bridgePercent: number;
+      ratioString: string;
+      ratioFormatted: string;
+      isIdeal: boolean;
+      status: 'stiff' | 'moderate' | 'optimal' | 'ultra-flex' | 'fragile';
+      statusLabel: string;
+    };
   };
 }
 
